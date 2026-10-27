@@ -5,7 +5,7 @@ from classes import *
 
 def main():
     t = Termostato()
-    t.temperatura = 0.2
+    t.temperatura = 25.3
     inspect(t, private=True, methods=True)
     print(f'A temperatura é {t.ftemperatura}')
 if __name__ == '__main__':
