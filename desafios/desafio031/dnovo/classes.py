@@ -32,8 +32,8 @@ class Retangulo:
     def area(self):
         return self._altura * self._base
     @area.setter
-    def area(self):
-        self._area = self._altura * self._base
+    def area(self, value):
+        raise PermissionError(f'O valor da área não pode ser modificado para {value}')
 
     @property
     def medidas(self):

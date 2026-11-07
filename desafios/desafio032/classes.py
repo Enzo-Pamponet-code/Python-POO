@@ -26,7 +26,8 @@ class ContaBancaria:
             print('[red bold]Senha não confere. Nome não autorizado.[/]')
 
 
-    def pede_senha(self)-> str:
+    @staticmethod
+    def pede_senha()-> str:
         key_str = getpass.getpass('Digite sua senha: ', echo_char='*')
         key_sha = sha256(key_str.encode()).hexdigest()
         return key_sha
