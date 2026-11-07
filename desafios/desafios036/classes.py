@@ -4,21 +4,25 @@ from abc import ABC
 class Pagamento(ABC):
     def __init__(self, valor:int|float = 0):
         self._valor = valor
+        self.valor = valor
+
+    @property
+    def valor(self):
+        return self._valor
+    @valor.setter
+    def valor(self, value):
+        if value < 0:
+            raise ValueError('Deposito não pode ser negativo.')
+        self._valor = value
 
     @property
     def fvalor(self):
-        return f'R${self._valor:.2f}'
+        return f'{convesor(self._valor)}'
     @fvalor.setter
     def fvalor(self,value:int|float):
         if value < 0:
             raise ValueError('Valor Incorreto!')
         self._valor = value
-    def pagar(self, value:int|float):
-        if value < 0:
-            raise ValueError('Valor Incorreto!')
-        if value > self._valor:
-            raise ValueError('O pagamento não pode ser maior que o valor')
-        self._valor -= value
 
 class Pix(Pagamento):
     pass
@@ -46,5 +50,6 @@ def convesor(value:int|float):
 
 
 def finalizar_compra(metodo_pagamento, valor):
-    c = convesor(valor)
-    print(f'Pagamento CONFIRMADO de {c} via {metodo_pagamento.__class__.__name__}')
+    classe = metodo_pagamento
+    classe.__init__(valor)
+    print(f'Pagamento CONFIRMADO de {classe.fvalor} via {metodo_pagamento.__class__.__name__}')
