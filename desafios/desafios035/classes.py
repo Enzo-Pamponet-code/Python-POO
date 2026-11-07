@@ -14,7 +14,7 @@ class Arquivo(ABC):
         return self.nome
     @nome_completo.setter
     def nome_completo(self,value):
-        self.nome = f"'{self.nome}{self.__class__.tipo}'({self.tamanho/1000000:.2f}MB)"
+        self.nome = f"'{self.nome}.{self.extensao}'({self.tamanho/1000000:.2f}MB)"
 
     @property
     def extensao(self):
@@ -30,17 +30,23 @@ class Arquivo(ABC):
 
 
 class PDF(Arquivo):
-    tipo = '.pdf'
-    abridor = 'Adobe Reader'
+    def __init__(self, nome:str, tamanho:int|float ):
+        super().__init__(nome, 'pdf', tamanho)
+    def abrir(self):
+        print(f"Abrindo o arquivo {self.nome} no Adobe Reader")
 
 
 class DOC(Arquivo):
-    tipo = '.docx'
-    abridor = 'Microsoft Word'
+    def __init__(self, nome:str, tamanho:int|float ):
+        super().__init__(nome, 'docx', tamanho)
+    def abrir(self):
+        print(f"Abrindo o arquivo {self.nome} no Microsoft Word")
 
 class Python(Arquivo):
-    tipo = '.py'
-    abridor = 'PyCharm'
+    def __init__(self, nome:str, tamanho:int|float ):
+        super().__init__(nome, 'py', tamanho)
+    def abrir(self):
+        print(f"Abrindo o arquivo {self.nome} no PyCharm")
 
 def abrir_arquivo(arquivo):
-    print(f'Abrindo o arquivo {arquivo.nome_completo} no {arquivo.__class__.abridor}')
+    arquivo.abrir()
