@@ -44,6 +44,7 @@ class Senha(Validador):
     def validar(self, string):
         if len(string) >= 8:
             try:
+                re.search('[a-z]', string).span()
                 re.search('[A-Z]', string).span()
                 re.search('[^a-zA-z0-9]', string).span()
                 return True
