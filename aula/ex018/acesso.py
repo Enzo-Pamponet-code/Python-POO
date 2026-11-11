@@ -8,8 +8,10 @@ try:
         curso.execute('SELECT * FROM amigos WHERE nome LIKE ?', (f'%{busca}%',))
         #lista = curso.fetchall()
         #print(lista)
-        for amigo in curso:
+        total =0
+        for total, amigo in enumerate(curso, start=1):
             print(f'{amigo['nome']} nasceu no ano {amigo['nascimento']}')
+        print(f'Ao todo encontrei {total} amigos com "{busca}"')
 except sqlite3.Error as erro:
     print(f'falha no banco: {erro}')
 except Exception as erro:
