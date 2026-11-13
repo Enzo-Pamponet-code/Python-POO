@@ -33,7 +33,7 @@ class BancoDados:
                             pre_form = lista_[2].split('-')
                             p = pre_form
                             ano_de_nasce = date(int(p[0]), int(p[1]), int(p[2]))
-                            lista_.append(int((ano_atual - ano_de_nasce).days / 365.25))
+                            lista_.append(str(int((ano_atual - ano_de_nasce).days / 365.25))+' anos')
                             stri = '[blue]'
                             for w in pre_form[::-1]:
                                 if pre_form.index(w) == 0:
@@ -44,7 +44,7 @@ class BancoDados:
                             prenel += f'{lista_}\n'
                         except AttributeError:
                             prenel += f'[red]{lista_[0]}. Esse dado é invalido[/]'
-                    painel = Panel(prenel, expand=False)
+                    painel = Panel(prenel, expand=False, title='Pessoa(s)')
                     print(painel)
         except sqlite3.Error:
             print('Erro com o Banco de dados')
