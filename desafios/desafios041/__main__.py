@@ -3,7 +3,8 @@ from classes import *
 
 
 def main():
-    pass
+    b = BancoDados('banco_dados.db')
+    b.encontrar()
 
 if __name__ == '__main__':
     main()
