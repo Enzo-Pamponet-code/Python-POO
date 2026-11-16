@@ -30,24 +30,24 @@ class BancoDados:
                             lista_.append(p)
                         try:
                             ano_atual = date.today()
-                            pre_form = lista_[2].split('-')
-                            p = pre_form
-                            ano_de_nasce = date(int(p[0]), int(p[1]), int(p[2]))
-                            lista_.append(str(int((ano_atual - ano_de_nasce).days / 365.25))+' anos')
-                            stri = '[blue]'
-                            for w in pre_form[::-1]:
-                                if pre_form.index(w) == 0:
-                                    stri += w
-                                else:
-                                    stri += f'{w}/'
-                            lista_[2] = f'{stri}[/]'
+                            data = date.fromisoformat(lista_[2])
+                            if ano_atual.month < data.month:
+                                lista_.append(str(ano_atual.year - data.year-1)+' anos')
+                            else:
+                                lista_.append(str(ano_atual.year - data.year) + ' anos')
+                            lista_[2] = f'[blue]{data:%d/%m/%Y}[/]'
                             prenel += f'{lista_}\n'
                         except AttributeError:
                             prenel += f'[red]{lista_[0]}. Esse dado é invalido[/]'
+                        except TypeError:
+                            prenel += f'A data desse da pessoa {lista_[1]} é invalida'
                     painel = Panel(prenel, expand=False, title='Pessoa(s)')
                     print(painel)
+                    print(f'O total de pessoa(s) foi(ram) {len(lista)}')
         except sqlite3.Error:
-            print('Erro com o Banco de dados')
+            print('[red bold]Erro com o Banco de dados[/]')
+        except Exception as erro:
+            print(f'Algo deu errado {erro}')
 #busca = input('Pesquise: ')
 
 #try:
