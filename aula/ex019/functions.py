@@ -9,6 +9,23 @@ def cadastro_em_massa(prompt, pessoas):
         cursor.executemany(prompt, pessoas)
 
 
+def validador(prompt):
+     curso = buscar(prompt)
+     lista = []
+     for pessoa in curso:
+         lista.append(pessoa)
+     if len(lista) > 0:
+         return True
+     return False
+
+
+def ninput(prompt):
+    while True:
+        name = input(prompt).strip().capitalize()
+        if bool(name):
+            return name
+        print('[red]Tente novamente[/]')
+
 
 def continuar():
     continua = input('Não encontramos só uma pessoa, deseja tentar novamente [S/N]:\n')
@@ -83,19 +100,25 @@ def system(opcao):
     try:
         #----------------------------------------------opção 1--------------------------------------------------------------------
         if opcao == 1:
-            nome = input('Digite o nome da pessoa:')
+            print('\n'*30)
             while True:
-                altura = input('Digite a altura dessa pessoa (Em metros):')
-                try:
-                    if 0.45 <= float(altura) <= 2.60:
-                        altura = float(f'{float(altura):.2f}')
-                        break
-                except ValueError:
-                    print('[red]Valor incorreto.[/]')
-            acesso_banco(f'''INSERT INTO pessoas
-(nome, altura)
-VALUES 
-    ("{nome}","{altura}");''')
+                nome = ninput('Digite o nome da pessoa: ')
+                if not validador(nome):
+                    while True:
+                        altura = input('Digite a altura dessa pessoa (Em metros):')
+                        try:
+                            if 0.45 <= float(altura) <= 2.60:
+                                altura = f'{float(altura):.2f}'
+                                break
+                        except ValueError:
+                            print('[red]Valor incorreto.[/]')
+                    acesso_banco(f'''INSERT INTO pessoas
+        (nome, altura)
+        VALUES 
+            ("{nome}","{altura}");''')
+                    break
+                else:
+                    print('[red]Nome está contido no banco de dados[/]')
         #-----------------------------------------opção 2------------------------------------------------------------------
         elif opcao == 2:
             print('\n'*30)

@@ -11,3 +11,5 @@ def main():
             print('[blue]Volte sempre[/]')
             break
         print('\n'*30)
+if __name__ == '__main__':
+    main()
