@@ -3,6 +3,12 @@ from rich import print
 import sqlite3
 
 
+def cadastro_em_massa(prompt, pessoas):
+    with sqlite3.connect('cadastro.db') as sql:
+        cursor = sql.cursor()
+        cursor.executemany(prompt, pessoas)
+
+
 
 def continuar():
     continua = input('Não encontramos só uma pessoa, deseja tentar novamente [S/N]:\n')
@@ -149,7 +155,7 @@ FROM pessoas'''):
                         acesso_banco('''DELETE FROM pessoas
                         WHERE nome LIKE ?''', (f'%{resultado[0][1]}%',))
                         break
-                except:
+                except sqlite3.Error:
                     print('Erro')
         #---------------------------------opção 5------------------------------------
         elif opcao == 5:
